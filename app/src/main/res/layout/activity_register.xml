@@ -9,14 +9,14 @@
     >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="405dp"
+        android:layout_height="548dp"
         android:orientation="vertical"
         android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.497"
-        tools:layout_editor_absoluteX="-143dp">
+        tools:layout_editor_absoluteX="6dp">
 
         <EditText
             android:id="@+id/usernameInputBox"
@@ -64,7 +64,7 @@
 
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/imageInputField"
             android:layout_width="match_parent"
             android:layout_height="111dp"
             android:background="@color/white"

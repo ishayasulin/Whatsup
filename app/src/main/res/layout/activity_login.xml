@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:ems="10"
-            android:hint="Username"
+            android:hint="@string/username"
             android:textColorHint="?attr/colorOnSurface"
             android:inputType="textPersonName"
             android:textColor="?attr/colorOnBackground"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:ems="10"
-            android:hint="Password"
+            android:hint="@string/password"
             android:textColorHint="?attr/colorOnSurface"
             android:inputType="textPassword"
             android:textColor="?attr/colorOnBackground"
@@ -55,7 +55,7 @@
         tools:layout_editor_absoluteX="0dp">
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/loginBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -65,11 +65,11 @@
             tools:layout_editor_absoluteY="539dp" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/toRegister"
             android:layout_width="172dp"
             android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:text="Not a member?"
+            android:text="@string/not_a_member"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="539dp" />
 
@@ -89,13 +89,13 @@
          />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/HeadLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="102dp"
         android:layout_marginEnd="103dp"
         android:fontFamily="monospace"
-        android:text="Login"
+        android:text="@string/headline"
         android:textSize="48sp"
         android:textColor="?attr/colorOnBackground"
         app:layout_constraintEnd_toEndOf="parent"

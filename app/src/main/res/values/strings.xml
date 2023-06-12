@@ -6,4 +6,7 @@
     <string name="register">Register</string>
     <string name="username">Username</string>
     <string name="login">login</string>
+    <string name="headline">Login</string>
+    <string name="not_a_member">Not a member?</string>
+    <string name="enter_username_to_add">Enter username to add</string>
 </resources>
