@@ -1,10 +1,15 @@
-package com.example.whatsup;
+package com.example.whatsup.activities;
 
 import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
+
+import com.example.whatsup.R;
+import com.example.whatsup.data.AppDB;
+import com.example.whatsup.data.ContactDao;
+import com.example.whatsup.entities.Contact;
 
 
 public class AddContact extends AppCompatActivity {

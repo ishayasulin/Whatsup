@@ -1,4 +1,4 @@
-package com.example.whatsup;
+package com.example.whatsup.entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

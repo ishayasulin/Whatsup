@@ -1,4 +1,4 @@
-package com.example.whatsup;
+package com.example.whatsup.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -9,6 +9,8 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+
+import com.example.whatsup.R;
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
     private AppCompatButton register;

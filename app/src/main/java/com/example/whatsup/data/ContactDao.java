@@ -1,10 +1,12 @@
-package com.example.whatsup;
+package com.example.whatsup.data;
 
 import androidx.annotation.NonNull;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+
+import com.example.whatsup.entities.Contact;
 
 import java.util.List;
 @Dao
