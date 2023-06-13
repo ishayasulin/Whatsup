@@ -9,4 +9,6 @@
     <string name="headline">Login</string>
     <string name="not_a_member">Not a member?</string>
     <string name="enter_username_to_add">Enter username to add</string>
+    <string name="add">Add</string>
+    <string name="already_have_an_account">Already have an account?</string>
 </resources>
