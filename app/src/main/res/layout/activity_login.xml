@@ -32,7 +32,7 @@
             android:hint="@string/username"
             android:textColorHint="#FFFBF6"
             android:background="@drawable/custom_et"
-            android:drawableStart="@drawable/circle"
+            android:drawableStart="@drawable/ic_add2"
             />
 
         <EditText
@@ -44,7 +44,7 @@
             android:hint="@string/password"
             android:textColorHint="#FFFBF6"
             android:background="@drawable/custom_et"
-            android:drawableStart="@drawable/circle"
+            android:drawableStart="@drawable/ic_shield"
             />
         custom_et"/>
 
