@@ -11,33 +11,49 @@ import com.example.whatsup.data.AppDB;
 import com.example.whatsup.data.ContactDao;
 import com.example.whatsup.entities.Contact;
 
+import java.util.Random;
 
 public class AddContact extends AppCompatActivity {
     private AppDB db;
-    private Contact contact;
     ContactDao contactDao;
     private Button save;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
-        save = (Button) findViewById(R.id.btnSave2);
+        save = findViewById(R.id.btnSave2);
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactDB")
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                .build();
 
-        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "FooDB")
-                .allowMainThreadQueries().build();
         contactDao = db.contactDao();
         handleSave();
     }
 
     private void handleSave() {
         save.setOnClickListener(view -> {
-            //TODO - save contact
+            // Instance of random class
+            Random rand = new Random();
+            // Setting the upper bound to generate the
+            // random numbers in specific range
+            int upperbound = 500;
+            // Generating random values from 0 - 24
+            // using nextInt()
+            int int_random = rand.nextInt(upperbound);
+            String username = "hi " + int_random; // Get username from user input
+            String displayName = "123"; // Get display name from user input
+            String lastMessage = "123"; // Get last message from user input
+            String lastDate = "12:00"; // Get last date from user input
+            int profilePic = R.drawable.ic_launcher_background; // Get profile picture resource ID from user input
+
+            // Create a new Contact object
+            Contact contact = new Contact(username, displayName, lastMessage, lastDate, profilePic);
+
+            // Insert the contact into the database
+            contactDao.insert(contact);
             finish();
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 }

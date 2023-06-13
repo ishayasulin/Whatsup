@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,9 +42,26 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        if(v == register){
-            Intent intent = new Intent(this, Chats.class);
-            startActivity(intent);
+        if (v == register) {
+            EditText passwordEditText = findViewById(R.id.passwordRegister);
+            EditText repeatPasswordEditText = findViewById(R.id.repeatPassword);
+
+            String password = passwordEditText.getText().toString().trim();
+            String repeatPassword = repeatPasswordEditText.getText().toString().trim();
+
+            if (password.length() >= 8 && password.length() <= 16) {
+                if (password.equals(repeatPassword)) {
+                    // Password is valid, proceed with registration
+                    Intent intent = new Intent(this, Chats.class);
+                    startActivity(intent);
+                } else {
+                    // Passwords do not match, show an error message
+                    repeatPasswordEditText.setError("Passwords do not match");
+                }
+            } else {
+                // Invalid password length, show an error message
+                passwordEditText.setError("Password length should be between 8 and 16 characters");
+            }
         }
     }
 }
