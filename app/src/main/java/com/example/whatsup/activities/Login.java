@@ -2,29 +2,80 @@ package com.example.whatsup.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.whatsup.R;
+import com.example.whatsup.databinding.ActivityLoginBinding;
+import com.example.whatsup.viewmodels.LoginViewModel;
 
-public class Login extends AppCompatActivity implements View.OnClickListener {
-    private TextView toRegister;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class Login extends AppCompatActivity {
+
+    private ActivityLoginBinding binding;
+    private LoginViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        toRegister = (TextView) findViewById(R.id.toRegister);
-        toRegister.setOnClickListener(this);
-    }
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
+        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
-    @Override
-    public void onClick(View v) {
-        if(v == toRegister){
-            Intent intent = new Intent(this, Register.class);
-            startActivity(intent);
-        }
+        binding.toRegister.setOnClickListener(v -> {
+            Intent i = new Intent(this, Register.class);
+            startActivity(i);
+        });
+        binding.usernameLogin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    binding.usernameLogin.setHint("");
+                } else {
+                    binding.usernameLogin.setHint(R.string.username);
+                }
+            }
+        });
+        binding.passwordLogin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    binding.passwordLogin.setHint("");
+                } else {
+                    binding.passwordLogin.setHint(R.string.password);
+                }
+            }
+        });
+
+        binding.loginBtn.setOnClickListener(v -> {
+            String username = binding.usernameLogin.getText().toString();
+            String password = binding.passwordLogin.getText().toString();
+                viewModel.login(username, password, new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        if (response.code() == 200) {
+                            Intent intent = new Intent(Login.this, Chats.class);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        Log.e("error", "error connection to the server");
+                    }
+                });
+            binding.usernameLogin.setText("");
+            binding.passwordLogin.setText("");
+            Toast.makeText(this, "Incorrect username or password", Toast.LENGTH_LONG).show();
+        });
     }
 }

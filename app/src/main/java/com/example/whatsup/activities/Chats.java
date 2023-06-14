@@ -34,7 +34,6 @@ public class Chats extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .build();
 
-
         contactDao = db.contactDao();
         handlePosts();
 
@@ -54,9 +53,6 @@ public class Chats extends AppCompatActivity {
     private void handlePosts() {
         lvContacts = findViewById(R.id.lvContacts);
         adapter = new ContactAdapter(dbContacts);
-
-        loadPosts();
-        lvContacts.setAdapter(adapter);
         lvContacts.setOnItemLongClickListener((adapterView, view, i, l) -> {
             Contact contact = dbContacts.get(i);
             contactDao.delete(contact);
@@ -64,11 +60,13 @@ public class Chats extends AppCompatActivity {
             handlePosts();
             return true;
         });
+        loadPosts();
+        lvContacts.setAdapter(adapter);
 
     }
 
     private void loadPosts() {
-        dbContacts = contactDao.getContacts();
+        dbContacts = contactDao.getAll();
         adapter.notifyDataSetChanged();
     }
 }
