@@ -31,6 +31,7 @@
             android:hint="@string/username"
             android:textColorHint="#FFFBF6"
             android:background="@drawable/custom_et"
+            android:drawableStart="@drawable/ic_add"
             />
         <EditText
             android:id="@+id/passwordRegister"
@@ -41,7 +42,8 @@
             android:layout_height="40dp"
             android:hint="@string/password"
             android:textColorHint="#FFFBF6"
-            android:background="@drawable/custom_et"/>
+            android:drawableStart="@drawable/ic_shield"
+            />
         <EditText
             android:id="@+id/repeatPassword"
             android:layout_marginTop="15dp"
@@ -51,7 +53,9 @@
             android:layout_height="40dp"
             android:hint="@string/repeat_password"
             android:textColorHint="#FFFBF6"
-            android:background="@drawable/custom_et"/>
+            android:background="@drawable/custom_et"
+            android:drawableStart="@drawable/ic_agsin"
+        />
         <EditText
             android:id="@+id/displayNameRegister"
             android:layout_marginTop="15dp"
@@ -60,7 +64,8 @@
             android:layout_height="40dp"
             android:hint="@string/display_name"
             android:textColorHint="#FFFBF6"
-            android:background="@drawable/custom_et"/>
+            android:drawableStart="@drawable/ic_user"
+            />
         <ImageButton
             android:id="@+id/pictureRegister"
             android:layout_width="match_parent"

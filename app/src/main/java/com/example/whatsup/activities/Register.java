@@ -23,7 +23,57 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         setContentView(R.layout.activity_register);
         register = (AppCompatButton) findViewById(R.id.registerBtn);
         register.setOnClickListener(this);
+
+        final EditText usernameEditText = findViewById(R.id.usernameRegister);
+        final EditText passwordEditText = findViewById(R.id.passwordRegister);
+        final EditText repeatPasswordEditText = findViewById(R.id.repeatPassword);
+        final EditText displayNameEditText = findViewById(R.id.displayNameRegister);
+
+        usernameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    usernameEditText.setHint("");
+                } else {
+                    usernameEditText.setHint(R.string.username);
+                }
+            }
+        });
+
+        passwordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    passwordEditText.setHint("");
+                } else {
+                    passwordEditText.setHint(R.string.password);
+                }
+            }
+        });
+
+        repeatPasswordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    repeatPasswordEditText.setHint("");
+                } else {
+                    repeatPasswordEditText.setHint(R.string.repeat_password);
+                }
+            }
+        });
+
+        displayNameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    displayNameEditText.setHint("");
+                } else {
+                    displayNameEditText.setHint(R.string.display_name);
+                }
+            }
+        });
     }
+
     public void onImageButtonClick(View view) {
         // Launch the file picker or image picker intent here
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -40,9 +90,27 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
+
     @Override
     public void onClick(View v) {
         if (v == register) {
+            EditText usernameEditText = findViewById(R.id.usernameRegister);
+            EditText passwordEditText = findViewById(R.id.passwordRegister);
+            EditText repeatPasswordEditText = findViewById(R.id.repeatPassword);
+            EditText displayNameEditText = findViewById(R.id.displayNameRegister);
+
+            String username = usernameEditText.getText().toString().trim();
+            String password = passwordEditText.getText().toString().trim();
+            String repeatPassword = repeatPasswordEditText.getText().toString().trim();
+            String displayName = displayNameEditText.getText().toString().trim();
+
+            if (username.isEmpty()) {
+                // Username is empty, show an error message
+                usernameEditText.setError("Please enter a username");
+            } else if (displayName.isEmpty()) {
+                // Display name is empty, show an error message
+                displayNameEditText.setError("Please enter a display name");
+            } else if (password.length() >= 8 && password.length() <= 16) {
             EditText passwordEditText = findViewById(R.id.passwordRegister);
             EditText repeatPasswordEditText = findViewById(R.id.repeatPassword);
 
@@ -64,4 +132,5 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             }
         }
     }
+
 }
