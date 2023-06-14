@@ -111,6 +111,13 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 // Display name is empty, show an error message
                 displayNameEditText.setError("Please enter a display name");
             } else if (password.length() >= 8 && password.length() <= 16) {
+            EditText passwordEditText = findViewById(R.id.passwordRegister);
+            EditText repeatPasswordEditText = findViewById(R.id.repeatPassword);
+
+            String password = passwordEditText.getText().toString().trim();
+            String repeatPassword = repeatPasswordEditText.getText().toString().trim();
+
+            if (password.length() >= 8 && password.length() <= 16) {
                 if (password.equals(repeatPassword)) {
                     // Password is valid, proceed with registration
                     Intent intent = new Intent(this, Chats.class);

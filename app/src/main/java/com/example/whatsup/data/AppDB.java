@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.whatsup.entities.Contact;
 
-@Database(entities = {Contact.class}, version = 1)
+@Database(entities = {Contact.class}, version = 3)
 public abstract class AppDB extends RoomDatabase {
     public abstract ContactDao contactDao();
 }
