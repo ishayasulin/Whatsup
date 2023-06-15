@@ -7,6 +7,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface WebServiceAPI {
@@ -40,8 +41,9 @@ public interface WebServiceAPI {
  @POST("api/Users")
  Call<String> register(@Body UtilsRegisterPayload payload);
 
+
  @GET("api/Chats")
- Call<List<Contact>> getContacts();
+ Call<List<Contact>> getContacts(@Header("Authorization") String token);
 
  class ContactPayload {
   public String id;

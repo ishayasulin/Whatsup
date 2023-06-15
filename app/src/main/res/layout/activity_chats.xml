@@ -14,12 +14,17 @@
         tools:layout_editor_absoluteX="-23dp"
         tools:layout_editor_absoluteY="219dp">
 
-        <ListView
-            android:id="@+id/lvContacts"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/contactList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="165dp"
-            tools:layout_editor_absoluteY="32dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:listitem="@layout/chat" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -30,5 +35,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="10pt"
         android:src="@drawable/ic_add_cont"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="10pt"
+        android:src="@drawable/ic_logout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

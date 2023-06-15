@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
+import com.example.whatsup.State;
 import com.example.whatsup.repositories.UserRepository;
 
 import retrofit2.Call;
@@ -24,6 +25,7 @@ public class LoginViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.code() == 200){
+                    State.token = response.body();
                     callback.onResponse(call, response);
                     repository.loadUser(username);
                 }

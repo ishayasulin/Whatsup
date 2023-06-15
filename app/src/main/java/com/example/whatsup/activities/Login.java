@@ -2,14 +2,13 @@ package com.example.whatsup.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.whatsup.R;
+import com.example.whatsup.State;
 import com.example.whatsup.databinding.ActivityLoginBinding;
 import com.example.whatsup.viewmodels.LoginViewModel;
 
@@ -59,23 +58,30 @@ public class Login extends AppCompatActivity {
         binding.loginBtn.setOnClickListener(v -> {
             String username = binding.usernameLogin.getText().toString();
             String password = binding.passwordLogin.getText().toString();
+            int worked = 0;
                 viewModel.login(username, password, new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.code() == 200) {
+                            State.token = response.body();
+                            State.currentUser = binding.usernameLogin.getText().toString();
                             Intent intent = new Intent(Login.this, Chats.class);
                             startActivity(intent);
+                        }
+                        else {
+                            State.currentUser = "none";
                         }
                     }
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-                        Log.e("error", "error connection to the server");
                     }
                 });
-            binding.usernameLogin.setText("");
-            binding.passwordLogin.setText("");
-            Toast.makeText(this, "Incorrect username or password", Toast.LENGTH_LONG).show();
+
+                binding.usernameLogin.setText("");
+                binding.passwordLogin.setText("");
+                binding.usernameLogin.setError("Incorrect username or password");
+
         });
     }
 }

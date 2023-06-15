@@ -10,6 +10,7 @@ import com.example.whatsup.R;
 import com.example.whatsup.data.AppDB;
 import com.example.whatsup.data.ContactDao;
 import com.example.whatsup.entities.Contact;
+import com.example.whatsup.entities.User;
 
 import java.util.Random;
 
@@ -42,14 +43,14 @@ public class AddContact extends AppCompatActivity {
             // Generating random values from 0 - 24
             // using nextInt()
             int int_random = rand.nextInt(upperbound);
-            String id = String.valueOf(int_random); // Get username from user input
+            String id = String.valueOf(int_random);
             String displayName = "123"; // Get display name from user input
             String lastMessage = "123"; // Get last message from user input
             String lastDate = "12:00"; // Get last date from user input
             int profilePic = R.drawable.ic_launcher_background; // Get profile picture resource ID from user input
 
             // Create a new Contact object
-            Contact contact = new Contact(id, displayName, lastMessage, lastDate, profilePic);
+            Contact contact = new Contact(id, new User("ishay", displayName, ""), null);
 
             // Insert the contact into the database
             contactDao.insert(contact);
