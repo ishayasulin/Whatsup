@@ -24,6 +24,7 @@
             android:textColor="#ffffff"/>
         <EditText
             android:id="@+id/usernameRegister"
+            android:textColor="@color/white"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:layout_width="250dp"
@@ -31,40 +32,53 @@
             android:hint="@string/username"
             android:textColorHint="#FFFBF6"
             android:background="@drawable/custom_et"
-            android:drawableStart="@drawable/ic_add"
+            android:drawableStart="@drawable/ic_person"
+            android:drawablePadding="-30dp"
+            android:paddingLeft="10dp"
             />
         <EditText
             android:id="@+id/passwordRegister"
-            android:layout_marginTop="15dp"
             android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:layout_marginTop="15dp"
             android:gravity="center"
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:hint="@string/password"
             android:textColorHint="#FFFBF6"
-            android:drawableStart="@drawable/ic_shield"
+            android:background="@drawable/custom_et"
+            android:drawableStart="@drawable/ic_shield2"
+            android:drawablePadding="-30dp"
+            android:paddingLeft="10dp"
+
             />
         <EditText
             android:id="@+id/repeatPassword"
-            android:layout_marginTop="15dp"
             android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:layout_marginTop="15dp"
             android:gravity="center"
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:hint="@string/repeat_password"
             android:textColorHint="#FFFBF6"
             android:background="@drawable/custom_et"
-            android:drawableStart="@drawable/ic_agsin"
-        />
+            android:drawableStart="@drawable/ic_again"
+            android:paddingLeft="10dp"
+
+            />
         <EditText
             android:id="@+id/displayNameRegister"
+            android:textColor="@color/white"
             android:layout_marginTop="15dp"
             android:gravity="center"
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:hint="@string/display_name"
             android:textColorHint="#FFFBF6"
-            android:drawableStart="@drawable/ic_user"
+            android:background="@drawable/custom_et"
+            android:paddingLeft="10dp"
+            android:drawableStart="@drawable/ic_display"
             />
         <ImageButton
             android:id="@+id/pictureRegister"
@@ -94,7 +108,7 @@
             android:background="#3fff"
             android:layout_marginTop="15dp"/>
         <TextView
-            android:id="@+id/toRegister"
+            android:id="@+id/toLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/already_have_an_account"

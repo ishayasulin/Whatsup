@@ -7,6 +7,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -23,7 +24,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         setContentView(R.layout.activity_register);
         register = (AppCompatButton) findViewById(R.id.registerBtn);
         register.setOnClickListener(this);
-
+        TextView tv = (TextView) findViewById(R.id.toLogin);
+        tv.setOnClickListener(v -> {
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+        });
         final EditText usernameEditText = findViewById(R.id.usernameRegister);
         final EditText passwordEditText = findViewById(R.id.passwordRegister);
         final EditText repeatPasswordEditText = findViewById(R.id.repeatPassword);
@@ -111,13 +116,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 // Display name is empty, show an error message
                 displayNameEditText.setError("Please enter a display name");
             } else if (password.length() >= 8 && password.length() <= 16) {
-            EditText passwordEditText = findViewById(R.id.passwordRegister);
-            EditText repeatPasswordEditText = findViewById(R.id.repeatPassword);
-
-            String password = passwordEditText.getText().toString().trim();
-            String repeatPassword = repeatPasswordEditText.getText().toString().trim();
-
-            if (password.length() >= 8 && password.length() <= 16) {
                 if (password.equals(repeatPassword)) {
                     // Password is valid, proceed with registration
                     Intent intent = new Intent(this, Chats.class);

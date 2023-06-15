@@ -22,9 +22,11 @@
             android:text="@string/headline"
             android:background="@drawable/circle"
             android:gravity="center"
+            android:layout_marginTop="-25dp"
             android:textColor="#ffffff"/>
         <EditText
             android:id="@+id/usernameLogin"
+            android:textColor="@color/white"
             android:layout_marginTop="15dp"
             android:gravity="center"
             android:layout_width="250dp"
@@ -32,11 +34,16 @@
             android:hint="@string/username"
             android:textColorHint="#FFFBF6"
             android:background="@drawable/custom_et"
-            android:drawableStart="@drawable/ic_add"
+            android:drawableLeft="@drawable/ic_person"
+            android:drawablePadding="-30dp"
+            android:paddingLeft="10dp"
+
             />
 
         <EditText
             android:id="@+id/passwordLogin"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
             android:layout_marginTop="15dp"
             android:gravity="center"
             android:layout_width="250dp"
@@ -44,10 +51,10 @@
             android:hint="@string/password"
             android:textColorHint="#FFFBF6"
             android:background="@drawable/custom_et"
-            android:drawableStart="@drawable/ic_shield"
+            android:drawablePadding="-30dp"
+            android:drawableLeft="@drawable/ic_shield2"
+            android:paddingLeft="10dp"
             />
-        custom_et"/>
-
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/loginBtn"

@@ -60,7 +60,7 @@ public class ContactAdapter extends BaseAdapter {
         Contact p = contacts.get(position);
         ViewHolder viewHolder = (ViewHolder) convertView.getTag();
         viewHolder.profile.setImageResource(p.getProfilePic());
-        viewHolder.name.setText(p.getUsername());
+        viewHolder.name.setText(p.getDisplayName());
         viewHolder.message.setText(p.getLastMessage());
         viewHolder.date.setText(p.getLastDate());
 

@@ -7,14 +7,14 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Contact {
     @PrimaryKey
-    @NonNull private String username;
+    @NonNull private String id;
     private String displayName;
     private String lastMessage;
     private String lastDate;
     private int profilePic;
 
-    public Contact(@NonNull String username, String displayName, String lastMessage, String lastDate, int profilePic) {
-        this.username = username;
+    public Contact(@NonNull String id, String displayName, String lastMessage, String lastDate, int profilePic) {
+        this.id = id;
         this.displayName = displayName;
         this.lastMessage = lastMessage;
         this.lastDate = lastDate;
@@ -37,8 +37,8 @@ public class Contact {
         this.lastDate = lastDate;
     }
 
-    public String getUsername() {
-        return username;
+    public String getId() {
+        return id;
     }
 
     public String getDisplayName() {
