@@ -3,49 +3,42 @@ package com.example.whatsup.entities;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import java.io.Serializable;
 
 @Entity
-public class Contact {
+@TypeConverters(Converters.class)
+public class Contact implements Serializable {
     @PrimaryKey
-    @NonNull private String id;
-    private String displayName;
-    private String lastMessage;
-    private String lastDate;
-    private int profilePic;
+    @NonNull
+     private String id;
+     private User user;
+    private Message lastMessage;
 
-    public Contact(@NonNull String id, String displayName, String lastMessage, String lastDate, int profilePic) {
+    public Contact(String id, User user, Message lastMessage) {
         this.id = id;
-        this.displayName = displayName;
+        this.user = user;
         this.lastMessage = lastMessage;
-        this.lastDate = lastDate;
-        this.profilePic = profilePic;
-    }
-
-    public String getLastMessage() {
-        return lastMessage;
-    }
-
-    public String getLastDate() {
-        return lastDate;
-    }
-
-    public void setLastMessage(String lastMessage) {
-        this.lastMessage = lastMessage;
-    }
-
-    public void setLastDate(String lastDate) {
-        this.lastDate = lastDate;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public User getUser() {
+        return user;
     }
 
-    public int getProfilePic() {
-        return profilePic;
+    public Message getLastMessage() {
+        return lastMessage;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id='" + id + '\'' +
+                ", last='" + lastMessage + '\'' +
+                '}';
     }
 }

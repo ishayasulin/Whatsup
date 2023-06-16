@@ -11,7 +11,7 @@ import com.example.whatsup.entities.Contact;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Contact.class}, version = 4)
+@Database(entities = {Contact.class}, version = 8)
 public abstract class AppDB extends RoomDatabase {
     public abstract ContactDao contactDao();
 

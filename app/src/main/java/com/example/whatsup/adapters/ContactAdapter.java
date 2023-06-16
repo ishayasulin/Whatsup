@@ -3,70 +3,54 @@ package com.example.whatsup.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.example.whatsup.R;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
+
+import com.example.whatsup.databinding.ChatBinding;
 import com.example.whatsup.entities.Contact;
 
-import java.util.List;
+public class ContactAdapter extends ListAdapter<Contact, ContactViewHolder> {
+    private OnListItemClick onListItemClick;
 
-public class ContactAdapter extends BaseAdapter {
-
-    List<Contact> contacts;
-
-    private class ViewHolder{
-        ImageView profile;
-        TextView name;
-        TextView message;
-        TextView date;
+    public ContactAdapter(@NonNull DiffUtil.ItemCallback<Contact> diffCallback) {
+        super(diffCallback);
     }
 
-    public ContactAdapter(List<Contact> posts) {
-        this.contacts = posts;
+    @NonNull
+    @Override
+    public ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        @NonNull ChatBinding binding = ChatBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ContactViewHolder(binding);
     }
 
     @Override
-    public int getCount() {
-        if(contacts == null) return 0;
-        return contacts.size();
+    public void onBindViewHolder(ContactViewHolder holder, int position) {
+        Contact current = getItem(position);
+        holder.itemView.setOnClickListener((View view) -> onListItemClick.onClick(view, current));
+        holder.bind(current);
     }
 
-    @Override
-    public Object getItem(int position) { return contacts.get(position); }
+    static public class ContactDiff extends DiffUtil.ItemCallback<Contact> {
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.chat, parent, false);
-
-            ViewHolder viewHolder = new ViewHolder();
-            viewHolder.profile = convertView.findViewById(R.id.contactImage);
-            viewHolder.name = convertView.findViewById(R.id.contactName);
-            viewHolder.message = convertView.findViewById(R.id.lastMessage);
-            viewHolder.date = convertView.findViewById(R.id.lastDate);
-
-            convertView.setTag(viewHolder);
+        @Override
+        public boolean areItemsTheSame(@NonNull Contact oldItem, @NonNull Contact newItem) {
+            return oldItem == newItem;
         }
 
-        Contact p = contacts.get(position);
-        ViewHolder viewHolder = (ViewHolder) convertView.getTag();
-        viewHolder.profile.setImageResource(p.getProfilePic());
-        viewHolder.name.setText(p.getDisplayName());
-        viewHolder.message.setText(p.getLastMessage());
-        viewHolder.date.setText(p.getLastDate());
+        @Override
+        public boolean areContentsTheSame(@NonNull Contact oldItem, @NonNull Contact newItem) {
+            return oldItem.toString().equals(newItem.toString());
+        }
+    }
 
-        return convertView;
+    public interface OnListItemClick {
+        void onClick(View view, Contact contact);
     }
-    public void setContacts(List<Contact> contacts) {
-        this.contacts = contacts;
+
+    public void setItemClickListener(OnListItemClick callback) {
+        this.onListItemClick = callback;
     }
+
 }

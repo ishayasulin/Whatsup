@@ -1,5 +1,6 @@
 package com.example.whatsup.data;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -14,8 +15,10 @@ import java.util.List;
 public interface ContactDao {
 
     @Query("SELECT * FROM contact")
-    List<Contact> getAll();
+    LiveData<List<Contact>> getAll();
 
+    @Query("SELECT * FROM contact WHERE id =:id")
+    LiveData<Contact> get(String id);
 
     @Query("SELECT * FROM contact WHERE id =:id")
     Contact getContact(String id);

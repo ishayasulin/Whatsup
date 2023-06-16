@@ -2,6 +2,7 @@ package com.example.whatsup.repositories;
 
 import android.app.Application;
 
+import com.example.whatsup.State;
 import com.example.whatsup.api.RetrofitService;
 import com.example.whatsup.api.WebServiceAPI;
 import com.example.whatsup.data.AppDB;
@@ -28,44 +29,19 @@ public class UserRepository {
 //    }
     public void loadUser(String username) {
 
-        api.getContacts().enqueue(new Callback<List<Contact>>() {
+        api.getContacts("Bearer " + State.token).enqueue(new Callback<List<Contact>>() {
             @Override
             public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
-                // if success
-                if (response.code() == 200) {
-                    // removing all
-                    db.clearAllTables();
-
-                    // getting all contacts
                     List<Contact> contacts = response.body();
+                    if (contacts != null) {
+                        // Clear the existing contacts in the database
+                        contactDao.deleteAll();
 
-                    // inserting all
-                    contactDao.insertAll(contacts);
-
-//                    // getting all messages
-//                    for (Contact c : contacts) {
-//
-//                        api.getMessages(c.getId()).enqueue(new Callback<List<Message>>() {
-//                            @Override
-//                            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
-//                                if (response.code() == 200) {
-//                                    List<Message> messages = response.body();
-//                                    for (Message m : messages) {
-//                                        m.setContact(c.getId());
-//                                    }
-//                                    messagesDao.insertAll(messages);
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onFailure(Call<List<Message>> call, Throwable t) {
-//                                t.printStackTrace();
-//                            }
-//                        });
-//
-//                    }
-                }
+                        // Insert the new contacts
+                        contactDao.insertAll(contacts);
+                    }
             }
+
 
             @Override
             public void onFailure(Call<List<Contact>> call, Throwable t) {
@@ -76,8 +52,9 @@ public class UserRepository {
     private static UserRepository instance;
 
     private UserRepository(Application application) {
-        api = RetrofitService.getAPI("10.0.2.2:5000");
+        api = RetrofitService.getAPI(State.server);
         db = AppDB.getDatabase(application);
+        contactDao = db.contactDao();
     }
 
     public static UserRepository getInstance(Application application) {
