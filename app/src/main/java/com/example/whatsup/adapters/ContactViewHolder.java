@@ -17,12 +17,16 @@ class ContactViewHolder extends RecyclerView.ViewHolder {
         binding.lastMessage.setText(contact.getLastMessage().getContent());
         binding.contactName.setText(contact.getUser().getDisplayName());
         String messageISO = contact.getLastMessage().getCreated();
-
-        if(messageISO == null){
+        if (messageISO == null) {
             binding.lastDate.setText("");
             return;
         }
-
         binding.lastDate.setText(messageISO.substring(11, 16));
+
+
+
+
+
+        ///here convert the picture from 64base to imageView
     }
 }

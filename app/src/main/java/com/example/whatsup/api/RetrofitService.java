@@ -9,7 +9,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitService {
 
-
     public static WebServiceAPI getAPI(String url) {
 
         Gson gson = new GsonBuilder()

@@ -29,7 +29,6 @@ public class Login extends AppCompatActivity {
         setContentView(view);
 
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-
         binding.toRegister.setOnClickListener(v -> {
             Intent i = new Intent(this, Register.class);
             startActivity(i);
@@ -58,7 +57,12 @@ public class Login extends AppCompatActivity {
         binding.loginBtn.setOnClickListener(v -> {
             String username = binding.usernameLogin.getText().toString();
             String password = binding.passwordLogin.getText().toString();
-            int worked = 0;
+            if(username.equals("")){
+                binding.usernameLogin.setError("Please enter your username");
+            }
+            if(password.equals("")){
+                binding.passwordLogin.setError("Please enter your password");
+            }
                 viewModel.login(username, password, new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
