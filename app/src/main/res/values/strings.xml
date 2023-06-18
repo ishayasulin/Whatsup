@@ -16,4 +16,5 @@
     <string name="settings2">Settings</string>
     <string name="dark_mode">Dark mode</string>
     <string name="choose_port_number">Choose port number</string>
+    <string name="change">Change</string>
 </resources>
