@@ -31,4 +31,12 @@
             android:text="@string/add"
             android:drawableEnd="@drawable/ic_add" />
     </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/returnBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="10pt"
+        android:src="@drawable/ic_back"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

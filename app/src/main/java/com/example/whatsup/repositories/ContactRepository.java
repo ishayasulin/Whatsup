@@ -34,13 +34,13 @@ public class ContactRepository {
         return allContacts;
     }
 
-    public void addContact(String from, String username, String nickname, String server) {
-        api.addContact(new WebServiceAPI.ContactPayload(username, nickname, server)).enqueue(new Callback<Contact>() {
+    public void addContact(String username) {
+        api.addContact("Bearer " + State.token, new WebServiceAPI.ContactPayload(username)).enqueue(new Callback<Contact>() {
             @Override
             public void onResponse(Call<Contact> call, Response<Contact> response) {
                 if (response.code() == 200) {
-                    Contact contact = response.body();
-                    contactDao.insert(contact);
+//                    Contact contact = response.body();
+//                    contactDao.insert(contact);
                 }
             }
 

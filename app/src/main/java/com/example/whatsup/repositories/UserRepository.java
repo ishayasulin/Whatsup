@@ -37,6 +37,18 @@ public class UserRepository {
                         // Clear the existing contacts in the database
                         contactDao.deleteAll();
 
+                        for (Contact contact : contacts) {
+                            String profilePic = contact.getUser().getProfilePic();
+                            if(profilePic.charAt(13) == 'e'){
+                                String updatedProfilePic = profilePic.substring(23);
+                                contact.getUser().setProfilePic(updatedProfilePic);
+                            }
+                            else {
+                                String updatedProfilePic = profilePic.substring(22);
+                                contact.getUser().setProfilePic(updatedProfilePic);
+                            }
+                        }
+
                         // Insert the new contacts
                         contactDao.insertAll(contacts);
                     }
