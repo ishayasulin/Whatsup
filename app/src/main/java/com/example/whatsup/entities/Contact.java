@@ -34,6 +34,7 @@ public class Contact implements Serializable {
         return lastMessage;
     }
 
+
     @Override
     public String toString() {
         return "Contact{" +
