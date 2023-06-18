@@ -8,6 +8,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitService {
+    static WebServiceAPI api;
 
     public static WebServiceAPI getAPI(String url) {
 
@@ -20,7 +21,20 @@ public class RetrofitService {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        WebServiceAPI api = retrofit.create(WebServiceAPI.class);
+        api = retrofit.create(WebServiceAPI.class);
         return api;
     }
+    public static void updateServerUrl(String url) {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        // Update the Retrofit instance with the new server URL
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://" + url + "/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        api = retrofit.create(WebServiceAPI.class);
+    }
+
+
 }

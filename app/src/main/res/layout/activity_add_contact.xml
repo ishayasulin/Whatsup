@@ -6,30 +6,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.AddContact">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        android:gravity="center"
+        android:padding="10dp"
+        tools:ignore="ExtraText">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_friend"
+            android:background="@drawable/circle"
+            android:gravity="center"
+            android:layout_marginTop="-25dp"
+            android:textColor="#ffffff"/>
 
         <EditText
             android:id="@+id/etContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:ems="10"
-            android:hint="@string/enter_username_to_add" />
+            android:textColor="@color/white"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:hint="@string/enter_username_to_add"
+            android:textColorHint="#FFFBF6"
+            android:background="@drawable/custom_et"
+            android:drawableLeft="@drawable/ic_add"
+            android:drawablePadding="-30dp"
+            android:paddingLeft="10dp"
 
-        <Button
+            />
+
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSave2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/add"
-            android:drawableEnd="@drawable/ic_add" />
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:layout_marginTop="30dp"
+            android:textSize="18sp"
+            android:background="@drawable/custom_button"
+            android:textColor="@color/white"
+            android:text="@string/headline" />
+
+
     </LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/returnBtn"

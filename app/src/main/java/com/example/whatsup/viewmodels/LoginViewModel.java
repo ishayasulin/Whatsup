@@ -21,6 +21,7 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public void login(String username, String password, Callback<String> callback) {
+
         repository.login(username, password).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

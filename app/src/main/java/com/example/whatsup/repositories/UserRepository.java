@@ -68,7 +68,12 @@ public class UserRepository {
         db = AppDB.getDatabase(application);
         contactDao = db.contactDao();
     }
-
+    public void updateServerUrl(String url) {
+        // Update the server URL in RetrofitService
+        RetrofitService.updateServerUrl(url);
+        // Get the updated API instance
+        api = RetrofitService.getAPI(url);
+    }
     public static UserRepository getInstance(Application application) {
         if (instance == null) {
             instance = new UserRepository(application);

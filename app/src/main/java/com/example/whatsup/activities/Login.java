@@ -11,6 +11,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.whatsup.R;
@@ -36,8 +37,6 @@ public class Login extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // using toolbar as ActionBar
         setSupportActionBar(toolbar);
-
-        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         binding.toRegister.setOnClickListener(v -> {
             Intent i = new Intent(this, Register.class);
             startActivity(i);
@@ -98,6 +97,21 @@ public class Login extends AppCompatActivity {
 
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        ConstraintLayout rootLayout = binding.loginLayout;
+        if(State.isNight) {
+            rootLayout.setBackgroundResource(R.drawable.wallpaper);
+        }
+        else{
+            rootLayout.setBackgroundResource(R.drawable.wallpaper2);
+        }
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
