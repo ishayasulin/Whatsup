@@ -19,6 +19,10 @@ public class User implements Serializable {
         return profilePic;
     }
 
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
+
     public User(String username, String displayName, String profilePic) {
         this.username = username;
         this.displayName = displayName;

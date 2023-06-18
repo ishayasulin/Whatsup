@@ -1,5 +1,9 @@
 package com.example.whatsup.adapters;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.whatsup.databinding.ChatBinding;
@@ -14,19 +18,21 @@ class ContactViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Contact contact) {
-        binding.lastMessage.setText(contact.getLastMessage().getContent());
-        binding.contactName.setText(contact.getUser().getDisplayName());
-        String messageISO = contact.getLastMessage().getCreated();
-        if (messageISO == null) {
+        if(contact.getLastMessage() == null){
+            binding.lastMessage.setText("");
             binding.lastDate.setText("");
-            return;
         }
-        binding.lastDate.setText(messageISO.substring(11, 16));
-
-
-
-
-
-        ///here convert the picture from 64base to imageView
+        else {
+            binding.lastMessage.setText(contact.getLastMessage().getContent());
+            String messageISO = contact.getLastMessage().getCreated();
+            binding.lastDate.setText(messageISO.substring(11, 16));
+        }
+        binding.contactName.setText(contact.getUser().getDisplayName());
+        String s = contact.getUser().getProfilePic();
+        binding.contactImage.setImageBitmap(decodeBase64(s));
+    }
+    public static Bitmap decodeBase64(String base64Image) {
+        byte[] decodedBytes = Base64.decode(base64Image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
     }
 }

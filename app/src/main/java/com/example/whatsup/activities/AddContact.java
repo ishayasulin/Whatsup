@@ -1,60 +1,57 @@
 package com.example.whatsup.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.whatsup.R;
-import com.example.whatsup.data.AppDB;
-import com.example.whatsup.data.ContactDao;
-import com.example.whatsup.entities.Contact;
-import com.example.whatsup.entities.User;
-
-import java.util.Random;
+import com.example.whatsup.databinding.ActivityAddContactBinding;
+import com.example.whatsup.viewmodels.ContactViewModel;
 
 public class AddContact extends AppCompatActivity {
-    private AppDB db;
-    ContactDao contactDao;
-    private Button save;
+    private ActivityAddContactBinding binding;
+    private ContactViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_contact);
-        save = findViewById(R.id.btnSave2);
-        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactDB")
-                .allowMainThreadQueries()
-                .fallbackToDestructiveMigration()
-                .build();
+        binding = ActivityAddContactBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
-        contactDao = db.contactDao();
-        handleSave();
+        viewModel = new ViewModelProvider(this).get(ContactViewModel.class);
+
+        binding.btnSave2.setOnClickListener(v -> {
+            String username = binding.etContent.getText().toString();
+
+            String added = viewModel.addContact(username);
+
+            if (added == null) {
+                finish();
+            }
+        });
+
+        binding.returnBtn.setOnClickListener(v -> finish());
     }
 
-    private void handleSave() {
-        save.setOnClickListener(view -> {
-            // Instance of random class
-            Random rand = new Random();
-            // Setting the upper bound to generate the
-            // random numbers in specific range
-            int upperbound = 500;
-            // Generating random values from 0 - 24
-            // using nextInt()
-            int int_random = rand.nextInt(upperbound);
-            String id = String.valueOf(int_random);
-            String displayName = "123"; // Get display name from user input
-            String lastMessage = "123"; // Get last message from user input
-            String lastDate = "12:00"; // Get last date from user input
-            int profilePic = R.drawable.ic_launcher_background; // Get profile picture resource ID from user input
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
 
-            // Create a new Contact object
-            Contact contact = new Contact(id, new User("ishay", displayName, ""), null);
-
-            // Insert the contact into the database
-            contactDao.insert(contact);
-            finish();
-        });
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent = new Intent(this, Settings.class);
+        startActivity(intent);
+        return super.onOptionsItemSelected(item);
     }
 }

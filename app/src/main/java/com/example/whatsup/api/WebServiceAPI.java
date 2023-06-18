@@ -46,19 +46,16 @@ public interface WebServiceAPI {
  Call<List<Contact>> getContacts(@Header("Authorization") String token);
 
  class ContactPayload {
-  public String id;
-  public String name;
-  public String server;
+  public String username;
 
-  public ContactPayload(String id, String name, String server) {
-   this.id = id;
-   this.name = name;
-   this.server = server;
+  public ContactPayload(String name) {
+   this.username = name;
   }
  }
 
  @POST("api/Chats")
- Call<Contact> addContact(@Body ContactPayload payload);
+ Call<Contact> addContact(@Header("Authorization") String token, @Body ContactPayload payload);
+
 
 
  class RegisterTokenPayload {

@@ -37,6 +37,9 @@ public class Converters {
     // Type converters for Message class
     @TypeConverter
     public static String fromMessage(Message message) {
+        if(message == null){
+            return "";
+        }
         // Convert Message object to a string representation for storage
         return message.getId() + "," + message.getCreated() + "," + fromSender(message.getSender()) + "," + message.getContent();
     }
@@ -44,6 +47,9 @@ public class Converters {
     @TypeConverter
     public static Message toMessage(String messageString) {
         // Convert the stored string back to a Message object
+        if(messageString.equals("")){
+            return null;
+        }
         String[] parts = messageString.split(",");
         int id = Integer.parseInt(parts[0]);
         String created = parts[1];
