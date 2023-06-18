@@ -4,27 +4,41 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.whatsup.R;
+import com.example.whatsup.databinding.ActivityRegisterBinding;
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
     private AppCompatButton register;
+    private ActivityRegisterBinding binding;
     private static final int PICK_IMAGE_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // using toolbar as ActionBar
+        setSupportActionBar(toolbar);
         setContentView(R.layout.activity_register);
         register = (AppCompatButton) findViewById(R.id.registerBtn);
         register.setOnClickListener(this);
         TextView tv = (TextView) findViewById(R.id.toLogin);
+
         tv.setOnClickListener(v -> {
             Intent intent = new Intent(this, Login.class);
             startActivity(intent);
@@ -130,5 +144,17 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             }
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent = new Intent(this, Settings.class);
+        startActivity(intent);
+        return super.onOptionsItemSelected(item);
+    }
 }

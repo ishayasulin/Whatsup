@@ -2,9 +2,14 @@ package com.example.whatsup.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.whatsup.R;
@@ -27,6 +32,9 @@ public class Login extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // using toolbar as ActionBar
+        setSupportActionBar(toolbar);
 
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         binding.toRegister.setOnClickListener(v -> {
@@ -87,5 +95,18 @@ public class Login extends AppCompatActivity {
                 binding.usernameLogin.setError("Incorrect username or password");
 
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent = new Intent(this, Settings.class);
+        startActivity(intent);
+        return super.onOptionsItemSelected(item);
     }
 }
