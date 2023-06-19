@@ -16,11 +16,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.whatsup.R;
+import com.example.whatsup.State;
 import com.example.whatsup.databinding.ActivityRegisterBinding;
 
-public class Register extends AppCompatActivity implements View.OnClickListener {
+public class Register extends AppCompatActivity {
     private AppCompatButton register;
     private ActivityRegisterBinding binding;
     private static final int PICK_IMAGE_REQUEST_CODE = 1;
@@ -34,19 +36,49 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // using toolbar as ActionBar
         setSupportActionBar(toolbar);
-        setContentView(R.layout.activity_register);
-        register = (AppCompatButton) findViewById(R.id.registerBtn);
-        register.setOnClickListener(this);
         TextView tv = (TextView) findViewById(R.id.toLogin);
 
         tv.setOnClickListener(v -> {
             Intent intent = new Intent(this, Login.class);
             startActivity(intent);
         });
-        final EditText usernameEditText = findViewById(R.id.usernameRegister);
-        final EditText passwordEditText = findViewById(R.id.passwordRegister);
-        final EditText repeatPasswordEditText = findViewById(R.id.repeatPassword);
-        final EditText displayNameEditText = findViewById(R.id.displayNameRegister);
+        binding.registerBtn.setOnClickListener(v -> {
+            EditText usernameEditText = findViewById(R.id.usernameRegister);
+            EditText passwordEditText = findViewById(R.id.passwordRegister);
+            EditText repeatPasswordEditText = findViewById(R.id.repeatPassword);
+            EditText displayNameEditText = findViewById(R.id.displayNameRegister);
+
+            String username = usernameEditText.getText().toString().trim();
+            String password = passwordEditText.getText().toString().trim();
+            String repeatPassword = repeatPasswordEditText.getText().toString().trim();
+            String displayName = displayNameEditText.getText().toString().trim();
+
+            if (username.isEmpty()) {
+                // Username is empty, show an error message
+                usernameEditText.setError("Please enter a username");
+            } else if (displayName.isEmpty()) {
+                // Display name is empty, show an error message
+                displayNameEditText.setError("Please enter a display name");
+            } else if (password.length() >= 8 && password.length() <= 16) {
+                if (password.equals(repeatPassword)) {
+                    // Password is valid, proceed with registration
+                    Intent intent = new Intent(this, Chats.class);
+                    startActivity(intent);
+                } else {
+                    // Passwords do not match, show an error message
+                    repeatPasswordEditText.setError("Passwords do not match");
+                }
+            } else {
+                // Invalid password length, show an error message
+                passwordEditText.setError("Password length should be between 8 and 16 characters");
+            }
+        });
+
+
+        final EditText usernameEditText = binding.usernameRegister;
+        final EditText passwordEditText = binding.passwordRegister;
+        final EditText repeatPasswordEditText = binding.repeatPassword;
+        final EditText displayNameEditText = binding.displayNameRegister;
 
         usernameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -93,6 +125,19 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ConstraintLayout rootLayout = binding.registerLayout;
+        if(State.isNight) {
+            rootLayout.setBackgroundResource(R.drawable.wallpaper);
+        }
+        else{
+            rootLayout.setBackgroundResource(R.drawable.wallpaper2);
+        }
+
+    }
+
     public void onImageButtonClick(View view) {
         // Launch the file picker or image picker intent here
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -110,40 +155,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     }
 
 
-    @Override
-    public void onClick(View v) {
-        if (v == register) {
-            EditText usernameEditText = findViewById(R.id.usernameRegister);
-            EditText passwordEditText = findViewById(R.id.passwordRegister);
-            EditText repeatPasswordEditText = findViewById(R.id.repeatPassword);
-            EditText displayNameEditText = findViewById(R.id.displayNameRegister);
-
-            String username = usernameEditText.getText().toString().trim();
-            String password = passwordEditText.getText().toString().trim();
-            String repeatPassword = repeatPasswordEditText.getText().toString().trim();
-            String displayName = displayNameEditText.getText().toString().trim();
-
-            if (username.isEmpty()) {
-                // Username is empty, show an error message
-                usernameEditText.setError("Please enter a username");
-            } else if (displayName.isEmpty()) {
-                // Display name is empty, show an error message
-                displayNameEditText.setError("Please enter a display name");
-            } else if (password.length() >= 8 && password.length() <= 16) {
-                if (password.equals(repeatPassword)) {
-                    // Password is valid, proceed with registration
-                    Intent intent = new Intent(this, Chats.class);
-                    startActivity(intent);
-                } else {
-                    // Passwords do not match, show an error message
-                    repeatPasswordEditText.setError("Passwords do not match");
-                }
-            } else {
-                // Invalid password length, show an error message
-                passwordEditText.setError("Password length should be between 8 and 16 characters");
-            }
-        }
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

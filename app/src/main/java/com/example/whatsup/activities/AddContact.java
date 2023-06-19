@@ -9,6 +9,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.whatsup.R;
@@ -25,7 +26,9 @@ public class AddContact extends AppCompatActivity {
         binding = ActivityAddContactBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // using toolbar as ActionBar
+        setSupportActionBar(toolbar);
         viewModel = new ViewModelProvider(this).get(ContactViewModel.class);
 
         binding.btnSave2.setOnClickListener(v -> {
