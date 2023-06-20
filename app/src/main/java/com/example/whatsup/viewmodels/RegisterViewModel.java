@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import com.example.whatsup.State;
 import com.example.whatsup.repositories.UserRepository;
 
 import retrofit2.Call;
@@ -20,21 +19,15 @@ public class RegisterViewModel extends AndroidViewModel {
         repository = UserRepository.getInstance(application);
     }
 
-    public void register(String username, String password, String displayName, String profilePic, Callback<String> callback) {
-        repository.register(username, password, displayName, profilePic).enqueue(new Callback<String>() {
+    public void register(String username, String password, String displayName, String profilePic, Callback<Void> callback) {
+        repository.register(username, password, displayName, profilePic).enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if(response.code() == 200) {
-                    State.code = 200;
+            public void onResponse(Call<Void> call, Response<Void> response) {
                     callback.onResponse(call, response);
-                }
-                else{
-                    State.code = 409;
-                }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 t.printStackTrace();
                 callback.onFailure(call, t);
             }

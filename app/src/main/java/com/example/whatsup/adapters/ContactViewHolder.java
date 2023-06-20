@@ -29,6 +29,7 @@ class ContactViewHolder extends RecyclerView.ViewHolder {
         }
         binding.contactName.setText(contact.getUser().getDisplayName());
         String s = contact.getUser().getProfilePic();
+        if(s.length() < 23) return;
         binding.contactImage.setImageBitmap(decodeBase64(s));
     }
     public static Bitmap decodeBase64(String base64Image) {

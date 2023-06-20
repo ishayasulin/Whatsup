@@ -14,8 +14,6 @@ import com.example.whatsup.entities.Contact;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ContactRepository {
     private WebServiceAPI api;
@@ -34,21 +32,7 @@ public class ContactRepository {
         return allContacts;
     }
 
-    public void addContact(String username) {
-        api.addContact("Bearer " + State.token, new WebServiceAPI.ContactPayload(username)).enqueue(new Callback<Contact>() {
-            @Override
-            public void onResponse(Call<Contact> call, Response<Contact> response) {
-                if (response.code() == 200) {
-//                    Contact contact = response.body();
-//                    contactDao.insert(contact);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Contact> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-
+    public Call<Contact> addContact(String username) {
+        return api.addContact("Bearer " + State.token, new WebServiceAPI.ContactPayload(username));
     }
 }

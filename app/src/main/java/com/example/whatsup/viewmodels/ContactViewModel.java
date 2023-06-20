@@ -12,8 +12,11 @@ import com.example.whatsup.repositories.UserRepository;
 
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ContactViewModel extends AndroidViewModel {
-    private String currentUser = State.currentUser;
     private ContactRepository repository;
     private UserRepository repository2;
 
@@ -30,13 +33,19 @@ public class ContactViewModel extends AndroidViewModel {
         return allContacts;
     }
 
-    public String addContact(String username) {
-        if(username.equals(currentUser)){
-            return "cant add yourself";
-        }
+    public void addContact(String username, Callback<Contact> callback) {
+        repository.addContact(username).enqueue(new Callback<Contact>() {
+            @Override
+            public void onResponse(Call<Contact> call, Response<Contact> response) {
+                callback.onResponse(call, response);
+                repository2.loadUser(State.currentUser);
+            }
 
-        repository.addContact(username);
-        repository2.loadUser(State.currentUser);
-        return null;
+            @Override
+            public void onFailure(Call<Contact> call, Throwable t) {
+                t.printStackTrace();
+                callback.onFailure(call, t);
+            }
+        });
     }
 }

@@ -13,8 +13,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.whatsup.R;
+import com.example.whatsup.State;
 import com.example.whatsup.databinding.ActivityAddContactBinding;
+import com.example.whatsup.entities.Contact;
 import com.example.whatsup.viewmodels.ContactViewModel;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddContact extends AppCompatActivity {
     private ActivityAddContactBinding binding;
@@ -33,12 +39,27 @@ public class AddContact extends AppCompatActivity {
 
         binding.btnSave2.setOnClickListener(v -> {
             String username = binding.etContent.getText().toString();
-
-            String added = viewModel.addContact(username);
-
-            if (added == null) {
-                finish();
+            if(username.equals(State.currentUser)){
+                binding.etContent.setError("Cant add yourself!");
+                return;
             }
+
+            viewModel.addContact(username, new Callback<Contact>() {
+                @Override
+                public void onResponse(Call<Contact> call, Response<Contact> response) {
+                    if (response.code() == 200) {
+                        finish();
+                    }
+                    else {
+                        binding.etContent.setError("Username not found");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Contact> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
         });
 
         binding.returnBtn.setOnClickListener(v -> finish());

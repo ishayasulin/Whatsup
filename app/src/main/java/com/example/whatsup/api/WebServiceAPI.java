@@ -39,7 +39,7 @@ public interface WebServiceAPI {
   }
  }
  @POST("api/Users")
- Call<String> register(@Body UtilsRegisterPayload payload);
+ Call<Void> register(@Body UtilsRegisterPayload payload);
 
 
  @GET("api/Chats")

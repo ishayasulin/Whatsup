@@ -82,19 +82,17 @@ public class Login extends AppCompatActivity {
                         }
                         else {
                             State.currentUser = "none";
+                            binding.usernameLogin.setText("");
+                            binding.passwordLogin.setText("");
+                            binding.usernameLogin.setError("Incorrect username or password");
                         }
-                        return;
                     }
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
+                        t.printStackTrace();
                     }
                 });
-
-                binding.usernameLogin.setText("");
-                binding.passwordLogin.setText("");
-                binding.usernameLogin.setError("Incorrect username or password");
-
         });
     }
 

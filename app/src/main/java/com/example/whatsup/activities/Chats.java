@@ -32,9 +32,7 @@ public class Chats extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         // assigning ID of the toolbar to a variable
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // using toolbar as ActionBar
-        setSupportActionBar(toolbar);
+
         ContactAdapter adapter = new ContactAdapter(new ContactAdapter.ContactDiff());
         binding.contactList.setAdapter(adapter);
         binding.contactList.setLayoutManager(new LinearLayoutManager(this));
@@ -68,6 +66,9 @@ public class Chats extends AppCompatActivity {
             Intent intent = new Intent(this, Login.class);
             startActivity(intent);
         });
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // using toolbar as ActionBar
+        setSupportActionBar(toolbar);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -24,7 +24,7 @@ public class UserRepository {
         return api.login(new WebServiceAPI.UtilsPayload(username, password));
     }
 
-    public Call<String> register(String username, String password, String displayName,String profilePic) {
+    public Call<Void> register(String username, String password, String displayName,String profilePic) {
         return api.register(new WebServiceAPI.UtilsRegisterPayload(username, password,displayName, profilePic));
     }
     public void loadUser(String username) {
@@ -39,6 +39,7 @@ public class UserRepository {
 
                         for (Contact contact : contacts) {
                             String profilePic = contact.getUser().getProfilePic();
+                            if(profilePic.length() < 23) continue;
                             String updatedProfilePic;
                             if(profilePic.charAt(13) == 'e'){
                                 updatedProfilePic = profilePic.substring(23);
