@@ -101,23 +101,26 @@ public class Register extends AppCompatActivity {
                 // Invalid password length, show an error message
                 passwordEditText.setError("Password length should be between 8 and 16 characters");
             }
-
-            viewModel.register(username, password, displayName, picture, new Callback<String>() {
-                //todo check why it doesnt get in the func
+            viewModel.register(username, password, displayName, picture, new Callback<Void>() {
+                //todo check why with image its crushes
                 @Override
-                public void onResponse(Call<String> call, Response<String> response) {
+                public void onResponse(Call<Void> call, Response<Void> response) {
                     if(response.code() == 200) {
                         Intent intent = new Intent(Register.this, Login.class);
                         startActivity(intent);
+                        return;
                     }
-
+                    else if(response.code() == 409){
+                        binding.usernameRegister.setError("username already taken!");
+                    }
                 }
 
                 @Override
-                public void onFailure(Call<String> call, Throwable t) {
+                public void onFailure(Call<Void> call, Throwable t) {
                     t.printStackTrace();
                 }
             });
+            binding.usernameRegister.setError("username already taken!");
         });
 
 
