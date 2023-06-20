@@ -24,9 +24,9 @@ public class UserRepository {
         return api.login(new WebServiceAPI.UtilsPayload(username, password));
     }
 
-//    public Call<String> register(String username, String password) {
-//        //return api.register(new WebServiceAPI.UtilsPayload(username, password));
-//    }
+    public Call<String> register(String username, String password, String displayName,String profilePic) {
+        return api.register(new WebServiceAPI.UtilsRegisterPayload(username, password,displayName, profilePic));
+    }
     public void loadUser(String username) {
 
         api.getContacts("Bearer " + State.token).enqueue(new Callback<List<Contact>>() {
@@ -39,17 +39,20 @@ public class UserRepository {
 
                         for (Contact contact : contacts) {
                             String profilePic = contact.getUser().getProfilePic();
+                            String updatedProfilePic;
                             if(profilePic.charAt(13) == 'e'){
-                                String updatedProfilePic = profilePic.substring(23);
-                                contact.getUser().setProfilePic(updatedProfilePic);
+                                updatedProfilePic = profilePic.substring(23);
                             }
                             else {
-                                String updatedProfilePic = profilePic.substring(22);
-                                contact.getUser().setProfilePic(updatedProfilePic);
+                                updatedProfilePic = profilePic.substring(22);
                             }
+                            contact.getUser().setProfilePic(updatedProfilePic);
                         }
 
                         // Insert the new contacts
+
+
+                        //sort
                         contactDao.insertAll(contacts);
                     }
             }

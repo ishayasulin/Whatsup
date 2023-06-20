@@ -2,7 +2,6 @@ package com.example.whatsup.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -63,7 +62,6 @@ public class Login extends AppCompatActivity {
         });
 
         binding.loginBtn.setOnClickListener(v -> {
-            Log.d("server", State.server);
             String username = binding.usernameLogin.getText().toString();
             String password = binding.passwordLogin.getText().toString();
             if(username.equals("")){
@@ -80,10 +78,12 @@ public class Login extends AppCompatActivity {
                             State.currentUser = binding.usernameLogin.getText().toString();
                             Intent intent = new Intent(Login.this, Chats.class);
                             startActivity(intent);
+
                         }
                         else {
                             State.currentUser = "none";
                         }
+                        return;
                     }
 
                     @Override
