@@ -6,7 +6,6 @@ import android.util.Base64;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.whatsup.R;
 import com.example.whatsup.databinding.ChatBinding;
 import com.example.whatsup.entities.Contact;
 
@@ -31,14 +30,11 @@ class ContactViewHolder extends RecyclerView.ViewHolder {
         binding.contactName.setText(contact.getUser().getDisplayName());
         String s = contact.getUser().getProfilePic();
         if(s.length() < 23) return;
-        try {
-            binding.contactImage.setImageBitmap(decodeBase64(s));
 
-        }
-        catch (Exception e) {
-            binding.contactImage.setImageResource(R.drawable.man);
+        binding.contactImage.setImageBitmap(decodeBase64(s));
 
-        }
+
+
     }
     public static Bitmap decodeBase64(String base64Image) {
         byte[] decodedBytes = Base64.decode(base64Image, Base64.DEFAULT);

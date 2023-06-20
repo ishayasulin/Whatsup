@@ -2,6 +2,7 @@ package com.example.whatsup.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -37,6 +38,7 @@ public class Register extends AppCompatActivity {
     private ActivityRegisterBinding binding;
     private RegisterViewModel viewModel;
     private static final int PICK_IMAGE_REQUEST_CODE = 1;
+    private boolean changedPic = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class Register extends AppCompatActivity {
             startActivity(intent);
         });
         binding.registerBtn.setOnClickListener(v -> {
+            String completed = "";
             EditText usernameEditText = findViewById(R.id.usernameRegister);
             EditText passwordEditText = findViewById(R.id.passwordRegister);
             EditText repeatPasswordEditText = findViewById(R.id.repeatPassword);
@@ -64,6 +67,8 @@ public class Register extends AppCompatActivity {
             String repeatPassword = repeatPasswordEditText.getText().toString().trim();
             String displayName = displayNameEditText.getText().toString().trim();
             String picture = "";
+
+
             // Get the drawable from the ImageView
             Drawable drawable = binding.pictureRegister.getDrawable();
 
@@ -78,11 +83,22 @@ public class Register extends AppCompatActivity {
 
                 // Convert the byte array to a base64-encoded string
                 picture = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
+                completed = "data:image/png;base64," + picture;
                 // Use the base64String as needed
-            } else {
-                //Todo man.jpg
             }
+            if (!changedPic) {
+
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.man);
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+                String base64Image = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                completed = "data:image/png;base64," + base64Image;
+            }
+
+
+
 
             if (username.isEmpty()) {
                 // Username is empty, show an error message
@@ -101,7 +117,7 @@ public class Register extends AppCompatActivity {
                 // Invalid password length, show an error message
                 passwordEditText.setError("Password length should be between 8 and 16 characters");
             }
-            viewModel.register(username, password, displayName, picture, new Callback<Void>() {
+            viewModel.register(username, password, displayName, completed, new Callback<Void>() {
                 //todo check why with image its crushes
                 @Override
                 public void onResponse(Call<Void> call, Response<Void> response) {
@@ -200,6 +216,7 @@ public class Register extends AppCompatActivity {
             Uri selectedImageUri = data.getData();
             ImageButton imageButton = findViewById(R.id.pictureRegister);
             imageButton.setImageURI(selectedImageUri);
+            changedPic = true;
         }
     }
 
