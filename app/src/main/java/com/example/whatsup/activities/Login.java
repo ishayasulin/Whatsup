@@ -105,7 +105,7 @@ public class Login extends AppCompatActivity {
             rootLayout.setBackgroundResource(R.drawable.wallpaper);
         }
         else{
-            rootLayout.setBackgroundResource(R.drawable.wallpaper2);
+            rootLayout.setBackgroundResource(R.drawable.wallpaper);
         }
 
     }
