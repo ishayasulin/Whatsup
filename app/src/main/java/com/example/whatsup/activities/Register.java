@@ -1,9 +1,13 @@
 package com.example.whatsup.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,17 +18,24 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.whatsup.R;
 import com.example.whatsup.State;
 import com.example.whatsup.databinding.ActivityRegisterBinding;
+import com.example.whatsup.viewmodels.RegisterViewModel;
+
+import java.io.ByteArrayOutputStream;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Register extends AppCompatActivity {
-    private AppCompatButton register;
     private ActivityRegisterBinding binding;
+    private RegisterViewModel viewModel;
     private static final int PICK_IMAGE_REQUEST_CODE = 1;
 
     @Override
@@ -37,7 +48,7 @@ public class Register extends AppCompatActivity {
         // using toolbar as ActionBar
         setSupportActionBar(toolbar);
         TextView tv = (TextView) findViewById(R.id.toLogin);
-
+        viewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         tv.setOnClickListener(v -> {
             Intent intent = new Intent(this, Login.class);
             startActivity(intent);
@@ -52,6 +63,26 @@ public class Register extends AppCompatActivity {
             String password = passwordEditText.getText().toString().trim();
             String repeatPassword = repeatPasswordEditText.getText().toString().trim();
             String displayName = displayNameEditText.getText().toString().trim();
+            String picture = "";
+            // Get the drawable from the ImageView
+            Drawable drawable = binding.pictureRegister.getDrawable();
+
+            if (drawable instanceof BitmapDrawable) {
+                // Get the bitmap from the drawable
+                Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+
+                // Convert the bitmap to a byte array
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+                // Convert the byte array to a base64-encoded string
+                picture = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                // Use the base64String as needed
+            } else {
+                //Todo man.jpg
+            }
 
             if (username.isEmpty()) {
                 // Username is empty, show an error message
@@ -62,8 +93,6 @@ public class Register extends AppCompatActivity {
             } else if (password.length() >= 8 && password.length() <= 16) {
                 if (password.equals(repeatPassword)) {
                     // Password is valid, proceed with registration
-                    Intent intent = new Intent(this, Chats.class);
-                    startActivity(intent);
                 } else {
                     // Passwords do not match, show an error message
                     repeatPasswordEditText.setError("Passwords do not match");
@@ -72,6 +101,23 @@ public class Register extends AppCompatActivity {
                 // Invalid password length, show an error message
                 passwordEditText.setError("Password length should be between 8 and 16 characters");
             }
+
+            viewModel.register(username, password, displayName, picture, new Callback<String>() {
+                //todo check why it doesnt get in the func
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if(response.code() == 200) {
+                        Intent intent = new Intent(Register.this, Login.class);
+                        startActivity(intent);
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
         });
 
 

@@ -31,7 +31,7 @@ public interface WebServiceAPI {
   public String displayName;
   public String profilePic;
 
-  public UtilsRegisterPayload(String username, String password) {
+  public UtilsRegisterPayload(String username, String password, String displayName, String profilePic) {
    this.username = username;
    this.password = password;
    this.displayName = displayName;
