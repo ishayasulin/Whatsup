@@ -19,4 +19,6 @@
     <string name="change">Change</string>
     <string name="edit_the_server_ip_port">Edit the server ip + port</string>
     <string name="add_friend">Add friend</string>
+    <string name="enter_message">Enter Message</string>
+    <string name="send">send</string>
 </resources>

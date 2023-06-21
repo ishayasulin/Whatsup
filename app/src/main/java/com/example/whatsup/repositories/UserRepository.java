@@ -7,6 +7,7 @@ import com.example.whatsup.api.RetrofitService;
 import com.example.whatsup.api.WebServiceAPI;
 import com.example.whatsup.data.AppDB;
 import com.example.whatsup.data.ContactDao;
+import com.example.whatsup.data.MessageDao;
 import com.example.whatsup.entities.Contact;
 import com.example.whatsup.entities.Message;
 
@@ -26,6 +27,7 @@ public class UserRepository {
     private WebServiceAPI api;
     private AppDB db;
     private ContactDao contactDao;
+    private MessageDao messagesDao;
 
     public Call<String> login(String username, String password) {
         return api.login(new WebServiceAPI.UtilsPayload(username, password));
@@ -99,9 +101,27 @@ public class UserRepository {
 
 
                         contactDao.insertAll(contacts);
-                    }
-            }
+                        // getting all messages
+                        for (Contact c : contacts) {
 
+                            api.getMessages("Bearer " + State.token,c.getId()).enqueue(new Callback<List<Message>>() {
+                                @Override
+                                public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+                                    if (response.code() == 200) {
+                                        List<Message> messages = response.body();
+                                        messagesDao.insertAll(messages);
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<List<Message>> call, Throwable t) {
+                                    t.printStackTrace();
+                                }
+                            });
+
+                        }
+                    }
+                    }
 
             @Override
             public void onFailure(Call<List<Contact>> call, Throwable t) {
@@ -115,6 +135,7 @@ public class UserRepository {
         api = RetrofitService.getAPI(State.server);
         db = AppDB.getDatabase(application);
         contactDao = db.contactDao();
+        messagesDao = db.messageDao();
     }
     public void updateServerUrl(String url) {
         // Update the server URL in RetrofitService
