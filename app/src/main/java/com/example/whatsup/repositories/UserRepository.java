@@ -8,8 +8,15 @@ import com.example.whatsup.api.WebServiceAPI;
 import com.example.whatsup.data.AppDB;
 import com.example.whatsup.data.ContactDao;
 import com.example.whatsup.entities.Contact;
+import com.example.whatsup.entities.Message;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,6 +61,43 @@ public class UserRepository {
 
 
                         //sort
+                        // sort
+                        Collections.sort(contacts, new Comparator<Contact>() {
+                            @Override
+                            public int compare(Contact contact1, Contact contact2) {
+                                Message lastMessage1 = contact1.getLastMessage();
+                                Message lastMessage2 = contact2.getLastMessage();
+
+                                // Check if either last message is null
+                                if (lastMessage1 == null && lastMessage2 == null) {
+                                    return 0; // Both contacts have no last message, consider them equal
+                                } else if (lastMessage1 == null) {
+                                    return 1; // contact1 has no last message, so it should be considered greater than contact2
+                                } else if (lastMessage2 == null) {
+                                    return -1; // contact2 has no last message, so it should be considered greater than contact1
+                                }
+
+                                // Both contacts have a last message, proceed with date comparison
+                                String date1 = lastMessage1.getCreated();
+                                String date2 = lastMessage2.getCreated();
+
+                                try {
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+                                    Date parsedDate1 = dateFormat.parse(date1);
+                                    Date parsedDate2 = dateFormat.parse(date2);
+
+                                    // Compare the parsed dates in descending order (latest date first)
+                                    return parsedDate2.compareTo(parsedDate1);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                    // Handle the parsing exception if necessary
+                                }
+
+                                return 0;
+                            }
+                        });
+
+
                         contactDao.insertAll(contacts);
                     }
             }
