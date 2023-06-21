@@ -1,6 +1,7 @@
 package com.example.whatsup.api;
 
 import com.example.whatsup.entities.Contact;
+import com.example.whatsup.entities.Message;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface WebServiceAPI {
 
@@ -56,7 +58,19 @@ public interface WebServiceAPI {
  @POST("api/Chats")
  Call<Contact> addContact(@Header("Authorization") String token, @Body ContactPayload payload);
 
+ @GET("api/Chats/{id}/Messages")
+ Call<List<Message>> getMessages(@Header("Authorization") String token, @Path("id") String id);
 
+ class MessagePayload {
+  public String content;
+
+  public MessagePayload(String content) {
+   this.content = content;
+  }
+ }
+
+ @POST("api/Chats/{id}/Messages")
+ Call<Message> sendMessage(@Header("Authorization") String token, @Path("id") String id, @Body MessagePayload payload);
 
  class RegisterTokenPayload {
   public String username;

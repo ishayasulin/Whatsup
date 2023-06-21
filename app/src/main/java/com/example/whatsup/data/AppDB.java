@@ -7,13 +7,15 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.whatsup.entities.Contact;
+import com.example.whatsup.entities.Message;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Contact.class}, version = 9)
+@Database(entities = {Contact.class, Message.class}, version = 10)
 public abstract class AppDB extends RoomDatabase {
     public abstract ContactDao contactDao();
+    public abstract MessageDao messageDao();
 
     private static volatile AppDB INSTANCE;
     private static final int NUMBER_OF_THREADS = 5;
@@ -25,7 +27,7 @@ public abstract class AppDB extends RoomDatabase {
             synchronized (AppDB.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    AppDB.class, "WhatsupDB")
+                                    AppDB.class, "WhatsappDB")
                             //.addCallback(sRoomDatabaseCallback)
                             .fallbackToDestructiveMigration()
                             .allowMainThreadQueries()

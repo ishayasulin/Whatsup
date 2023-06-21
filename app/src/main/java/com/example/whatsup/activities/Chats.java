@@ -8,8 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -36,11 +36,11 @@ public class Chats extends AppCompatActivity {
         ContactAdapter adapter = new ContactAdapter(new ContactAdapter.ContactDiff());
         binding.contactList.setAdapter(adapter);
         binding.contactList.setLayoutManager(new LinearLayoutManager(this));
-//        adapter.setItemClickListener((v, contact) -> {
-////            Intent intent = new Intent(this, VerticalMessagesActivity.class);
-////            intent.putExtra("contact", contact);
-////            startActivity(intent);
-////        });
+        adapter.setItemClickListener((v, contact) -> {
+            Intent intent = new Intent(this, MessagesActivity.class);
+            intent.putExtra("contact", contact);
+            startActivity(intent);
+        });
 
         //String token = FirebaseService.getToken(this);
         //sendRegistrationToServer(token);

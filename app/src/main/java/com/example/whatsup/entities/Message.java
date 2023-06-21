@@ -1,9 +1,17 @@
 package com.example.whatsup.entities;
 
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
 import java.io.Serializable;
 
+@Entity
+@TypeConverters(Converters.class)
 public class Message implements Serializable {
+    @PrimaryKey
     private int id;
     private String created;
     private Sender sender;
@@ -31,5 +39,15 @@ public class Message implements Serializable {
 
     public String getContent() {
         return content;
+    }
+    @NonNull
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", contact='" + sender.getUsername() + '\'' +
+                ", content='" + content + '\'' +
+                ", created='" + created + '\'' +
+                '}';
     }
 }
