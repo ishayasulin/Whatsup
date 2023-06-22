@@ -36,8 +36,8 @@ public class MessagesActivity extends AppCompatActivity {
         setContentView(view);
 
         viewModel = new ViewModelProvider(this).get(MessageViewModel.class);
-        viewModel.updateDao(currentContact.getId());
         currentContact = (Contact) getIntent().getSerializableExtra("contact");
+        viewModel.updateDao(currentContact.getId());
 
         MessageListAdapter adapter = new MessageListAdapter();
         binding.messagesList.setAdapter(adapter);

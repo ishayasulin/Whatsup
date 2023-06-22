@@ -1,6 +1,7 @@
 package com.example.whatsup.repositories;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -39,6 +40,7 @@ public class MessageRepository {
                     messageDao.deleteAll();
                     List<Message> messages = response.body();
                     messageDao.insertAll(messages);
+
                 }
             }
 
