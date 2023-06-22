@@ -62,10 +62,10 @@ public interface WebServiceAPI {
  Call<List<Message>> getMessages(@Header("Authorization") String token, @Path("id") String id);
 
  class MessagePayload {
-  public String content;
+  public String msg;
 
   public MessagePayload(String content) {
-   this.content = content;
+   this.msg = content;
   }
  }
 

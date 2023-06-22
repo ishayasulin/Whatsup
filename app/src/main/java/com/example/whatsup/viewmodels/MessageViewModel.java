@@ -19,12 +19,15 @@ public class MessageViewModel extends AndroidViewModel {
         super(application);
         repository = new MessageRepository(application);
     }
-
-    public LiveData<List<Message>> getMessages(Contact currentContact) {
-        return repository.getMessages(currentContact.getId());
+    public void updateDao(String id){
+        repository.updateDao(id);
     }
 
-    public void addMessage(String from, Contact to, String content) {
-        repository.addMessage(to.getId(), content);
+    public LiveData<List<Message>> getMessages(Contact currentContact) {
+        return repository.getMessages();
+    }
+
+    public void addMessage(Contact to, String content) {
+        repository.addMessage(to, content);
     }
 }

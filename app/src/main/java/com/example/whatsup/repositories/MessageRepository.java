@@ -10,8 +10,8 @@ import com.example.whatsup.api.WebServiceAPI;
 import com.example.whatsup.data.AppDB;
 import com.example.whatsup.data.ContactDao;
 import com.example.whatsup.data.MessageDao;
+import com.example.whatsup.entities.Contact;
 import com.example.whatsup.entities.Message;
-import com.example.whatsup.entities.Sender;
 
 import java.util.List;
 
@@ -31,13 +31,29 @@ public class MessageRepository {
 
         api = RetrofitService.getAPI(State.server);
     }
+    public void updateDao(String id){
+        api.getMessages("Bearer " + State.token,id).enqueue(new Callback<List<Message>>() {
+            @Override
+            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+                if (response.code() == 200) {
+                    messageDao.deleteAll();
+                    List<Message> messages = response.body();
+                    messageDao.insertAll(messages);
+                }
+            }
 
-    public LiveData<List<Message>> getMessages(String with) {
-        return messageDao.getMessages(new Sender(with));
+            @Override
+            public void onFailure(Call<List<Message>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+    public LiveData<List<Message>> getMessages() {
+        return messageDao.getAll();
     }
 
-    public void addMessage(String id, String content) {
-        api.sendMessage("Bearer " + State.token, id, new WebServiceAPI.MessagePayload(content)).enqueue(new Callback<Message>() {
+    public void addMessage(Contact to, String content) {
+        api.sendMessage("Bearer " + State.token, to.getId(), new WebServiceAPI.MessagePayload(content)).enqueue(new Callback<Message>() {
             @Override
             public void onResponse(Call<Message> call, Response<Message> response) {
                 if (response.code() == 200) {
