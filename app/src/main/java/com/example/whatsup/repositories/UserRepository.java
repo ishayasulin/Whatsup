@@ -101,25 +101,6 @@ public class UserRepository {
 
 
                         contactDao.insertAll(contacts);
-                        // getting all messages
-                        for (Contact c : contacts) {
-
-                            api.getMessages("Bearer " + State.token,c.getId()).enqueue(new Callback<List<Message>>() {
-                                @Override
-                                public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
-                                    if (response.code() == 200) {
-                                        List<Message> messages = response.body();
-                                        messagesDao.insertAll(messages);
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<List<Message>> call, Throwable t) {
-                                    t.printStackTrace();
-                                }
-                            });
-
-                        }
                     }
                     }
 

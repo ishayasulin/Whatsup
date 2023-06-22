@@ -36,7 +36,7 @@ public class MessagesActivity extends AppCompatActivity {
         setContentView(view);
 
         viewModel = new ViewModelProvider(this).get(MessageViewModel.class);
-
+        viewModel.updateDao(currentContact.getId());
         currentContact = (Contact) getIntent().getSerializableExtra("contact");
 
         MessageListAdapter adapter = new MessageListAdapter();
@@ -46,6 +46,8 @@ public class MessagesActivity extends AppCompatActivity {
             finish();
         });
         binding.contactName.setText(currentContact.getUser().getUsername());
+        //binding.imageView2.setImageResource(currentContact.getUser().getProfilePic());
+        //convert to imageView
 
         viewModel.getMessages(currentContact).observe(this, list -> {
             adapter.submitList(list);
@@ -87,7 +89,7 @@ public class MessagesActivity extends AppCompatActivity {
         if (content.isEmpty()) {
             return;
         }
-        viewModel.addMessage(from, currentContact, content);
+        viewModel.addMessage(currentContact, content);
 
         binding.textInputMessage.setText("");
     }
