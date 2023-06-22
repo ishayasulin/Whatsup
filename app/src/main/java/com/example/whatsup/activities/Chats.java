@@ -12,18 +12,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.whatsup.R;
 import com.example.whatsup.State;
 import com.example.whatsup.adapters.ContactAdapter;
 import com.example.whatsup.databinding.ActivityChatsBinding;
 import com.example.whatsup.entities.Contact;
+import com.example.whatsup.repositories.UserRepository;
 import com.example.whatsup.viewmodels.ContactViewModel;
 
 import java.util.List;
 
 public class Chats extends AppCompatActivity {
     private ActivityChatsBinding binding;
+    private UserRepository userRepository;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,7 @@ public class Chats extends AppCompatActivity {
         binding = ActivityChatsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        userRepository = UserRepository.getInstance(getApplication());
         // assigning ID of the toolbar to a variable
 
         ContactAdapter adapter = new ContactAdapter(new ContactAdapter.ContactDiff());
@@ -69,6 +74,15 @@ public class Chats extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // using toolbar as ActionBar
         setSupportActionBar(toolbar);
+
+        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swiperefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                userRepository.loadUser(State.currentUser); // Call the loadUser() function to refresh the data
+                swipeRefreshLayout.setRefreshing(false); // Stop the refreshing animation
+            }
+        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,6 +97,10 @@ public class Chats extends AppCompatActivity {
         startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
 //    private void sendRegistrationToServer(String token) {
 //        WebServiceAPI api = RetrofitService.getAPI(State.server);
 //        api.registerToken(new WebServiceAPI.RegisterTokenPayload(State.currentUser, token)).enqueue(new Callback<Void>() {
