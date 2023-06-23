@@ -75,16 +75,10 @@ public class Login extends AppCompatActivity {
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.code() == 200) {
                             State.token = response.body();
-                            State.currentUser = binding.usernameLogin.getText().toString();
+
                             Intent intent = new Intent(Login.this, Chats.class);
                             startActivity(intent);
 
-                        }
-                        else {
-                            State.currentUser = "none";
-                            binding.usernameLogin.setText("");
-                            binding.passwordLogin.setText("");
-                            binding.usernameLogin.setError("Incorrect username or password");
                         }
                     }
 
@@ -93,6 +87,11 @@ public class Login extends AppCompatActivity {
                         t.printStackTrace();
                     }
                 });
+
+            State.currentUser = binding.usernameLogin.getText().toString();
+            binding.usernameLogin.setText("");
+            binding.passwordLogin.setText("");
+            binding.usernameLogin.setError("Incorrect username or password");
         });
     }
 
@@ -105,7 +104,7 @@ public class Login extends AppCompatActivity {
             rootLayout.setBackgroundResource(R.drawable.wallpaper);
         }
         else{
-            rootLayout.setBackgroundResource(R.drawable.wallpaper);
+            rootLayout.setBackgroundResource(R.drawable.wallpaper2);
         }
 
     }
