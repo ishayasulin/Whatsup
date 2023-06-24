@@ -198,7 +198,7 @@ public class Register extends AppCompatActivity {
             rootLayout.setBackgroundResource(R.drawable.wallpaper);
         }
         else{
-            rootLayout.setBackgroundResource(R.drawable.wallpaper);
+            rootLayout.setBackgroundResource(R.drawable.wallpaper2);
         }
 
     }

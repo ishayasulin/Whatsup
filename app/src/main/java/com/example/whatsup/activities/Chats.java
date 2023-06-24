@@ -66,8 +66,6 @@ public class Chats extends AppCompatActivity {
             startActivity(intent);
         });
         binding.btnLogout.setOnClickListener(view1 -> {
-            State.currentUser = "";
-            State.token = "";
             Intent intent = new Intent(this, Login.class);
             startActivity(intent);
         });
