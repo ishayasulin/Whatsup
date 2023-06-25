@@ -58,9 +58,6 @@ public class Chats extends AppCompatActivity {
         String token = FirebaseService.getToken(this);
         sendRegistrationToServer(token);
 
-//        Intent serviceIntent = new Intent();
-////        serviceIntent.setAction("com.google.firebase.MESSAGING_EVENT");
-//        startService(serviceIntent);
 
         ContactViewModel contactViewModel = new ViewModelProvider(this).get(ContactViewModel.class);
         contactViewModel.getAllContacts().observe(this, (List<Contact> list) -> {
