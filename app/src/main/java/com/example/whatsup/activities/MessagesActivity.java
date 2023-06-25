@@ -55,18 +55,21 @@ public class MessagesActivity extends AppCompatActivity {
         binding.messagesList.setLayoutManager(new LinearLayoutManager(this));
         currentContact = (Contact) getIntent().getSerializableExtra("contact");
         viewModel = new ViewModelProvider(this).get(MessageViewModel.class);
-        viewModel.updateDao(currentContact.getId(), new Callback<List<Message>>() {
-            @Override
-            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
-                List<Message> m = response.body();
-                Collections.reverse(m);
-                adapter.submitList(m);
-            }
 
-            @Override
-            public void onFailure(Call<List<Message>> call, Throwable t) {
-                t.printStackTrace();
-            }
+        viewModel.getMessages().observe(this, list -> {
+            viewModel.updateDao(currentContact.getId(), new Callback<List<Message>>() {
+                @Override
+                public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+                    List<Message> m = response.body();
+                    Collections.reverse(m);
+                    adapter.submitList(m);
+                }
+
+                @Override
+                public void onFailure(Call<List<Message>> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
         });
 
         binding.toChats.setOnClickListener(v -> {

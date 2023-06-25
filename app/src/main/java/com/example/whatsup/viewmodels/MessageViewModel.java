@@ -5,6 +5,8 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.whatsup.data.AppDB;
+import com.example.whatsup.data.MessageDao;
 import com.example.whatsup.entities.Contact;
 import com.example.whatsup.entities.Message;
 import com.example.whatsup.repositories.MessageRepository;
@@ -17,16 +19,22 @@ import retrofit2.Response;
 
 public class MessageViewModel extends AndroidViewModel {
     public MessageRepository repository;
+    private MessageDao messageDao;
 
     public MessageViewModel(Application application) {
         super(application);
         repository = new MessageRepository(application);
+        AppDB db = AppDB.getDatabase(application);
+        messageDao = db.messageDao();
     }
     public void updateDao(String id, Callback<List<Message>> callback){
         repository.updateDao(id).enqueue(new Callback<List<Message>>() {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+                messageDao.deleteAll();
+                messageDao.insertAll(response.body());
                 callback.onResponse(call, response);
+
             }
 
             @Override
@@ -37,7 +45,7 @@ public class MessageViewModel extends AndroidViewModel {
         });
     }
 
-    public LiveData<List<Message>> getMessages(Contact currentContact) {
+    public LiveData<List<Message>> getMessages() {
         return repository.getMessages();
     }
 
@@ -45,6 +53,7 @@ public class MessageViewModel extends AndroidViewModel {
         repository.addMessage(to, content).enqueue(new Callback<Message>() {
             @Override
             public void onResponse(Call<Message> call, Response<Message> response) {
+                messageDao.insert(response.body());
                 callback.onResponse(call, response);
             }
 

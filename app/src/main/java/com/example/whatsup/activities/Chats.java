@@ -51,6 +51,7 @@ public class Chats extends AppCompatActivity {
         contactViewModel.getAllContacts().observe(this, (List<Contact> list) -> {
             adapter.submitList(list);
             adapter.notifyDataSetChanged();
+            userRepository.loadUser(State.currentUser); // Call the loadUser() function to refresh the data
         });
 
         binding.btnAdd.setOnClickListener(view1 -> {

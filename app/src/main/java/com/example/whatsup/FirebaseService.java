@@ -16,6 +16,10 @@ import com.example.whatsup.api.WebServiceAPI;
 import com.example.whatsup.data.AppDB;
 import com.example.whatsup.data.ContactDao;
 import com.example.whatsup.data.MessageDao;
+import com.example.whatsup.entities.Contact;
+import com.example.whatsup.entities.Message;
+import com.example.whatsup.entities.Sender;
+import com.example.whatsup.entities.User;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -29,9 +33,8 @@ public class FirebaseService extends FirebaseMessagingService {
 
     public FirebaseService() {
         AppDB db = AppDB.getDatabase(this);
-        contactDao = db.contactDao();
         messageDao = db.messageDao();
-
+        contactDao = db.contactDao();
         api = RetrofitService.getAPI(State.server);
     }
 
@@ -39,13 +42,13 @@ public class FirebaseService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         Map<String, String> data = remoteMessage.getData();
-
-        //add message
-
+        Message m = new Message(99, "now", new Sender(remoteMessage.getNotification().getTitle()), remoteMessage.getNotification().getBody());
+        messageDao.insert(m);
+        contactDao.insert(new Contact(data.get("id"), new User(remoteMessage.getNotification().getTitle(), "friend", "1"), m));
         createNotificationChannel();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "123456")
-                .setSmallIcon(R.drawable.ic_settings)
+                .setSmallIcon(R.drawable.ic_msg)
                 .setContentTitle(remoteMessage.getNotification().getTitle())
                 .setContentText(remoteMessage.getNotification().getBody())
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
