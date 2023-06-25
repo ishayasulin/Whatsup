@@ -25,7 +25,7 @@ public interface WebServiceAPI {
  }
 
  @POST("api/Tokens")
- Call<String> login(@Body UtilsPayload payload);
+ Call<String> login( @Header("fireToken") String fireToken, @Body UtilsPayload payload);
 
  class UtilsRegisterPayload {
   public String username;
@@ -68,20 +68,7 @@ public interface WebServiceAPI {
    this.msg = content;
   }
  }
-
  @POST("api/Chats/{id}/Messages")
  Call<Message> sendMessage(@Header("Authorization") String token, @Path("id") String id, @Body MessagePayload payload);
 
- class RegisterTokenPayload {
-  public String username;
-  public String token;
-
-  public RegisterTokenPayload(String username, String token) {
-   this.username = username;
-   this.token = token;
-  }
- }
-
- @POST("api/registertoken")
- Call<Void> registerToken(@Body RegisterTokenPayload payload);
 }
