@@ -12,7 +12,7 @@ import com.example.whatsup.entities.Message;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Contact.class, Message.class}, version = 13)
+@Database(entities = {Contact.class, Message.class}, version = 19)
 public abstract class AppDB extends RoomDatabase {
     public abstract ContactDao contactDao();
     public abstract MessageDao messageDao();

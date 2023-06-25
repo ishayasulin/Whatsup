@@ -93,6 +93,8 @@ public class Login extends AppCompatActivity {
             binding.passwordLogin.setText("");
             binding.usernameLogin.setError("Incorrect username or password");
         });
+
+
     }
 
     @Override
