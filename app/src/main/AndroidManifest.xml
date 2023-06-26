@@ -2,7 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -11,18 +16,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Whatsup"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <service
+            android:name=".FirebaseService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
-            android:name=".AddContact"
+            android:name=".activities.MessagesActivity"
             android:exported="false" />
         <activity
-            android:name=".Chats"
+            android:name=".activities.Settings"
             android:exported="false" />
         <activity
-            android:name=".Register"
+            android:name=".activities.AddContact"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Chats"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Register"
             android:exported="true" />
         <activity
-            android:name=".Login"
+            android:name=".activities.Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
