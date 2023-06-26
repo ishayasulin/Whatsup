@@ -11,7 +11,7 @@ In this task we created the chatting app from the previous tasks as an android a
   
 
   # How to run
-- Run your server
+- Run your server (or our from last task [here is the link(https://github.com/AP2-group/ap2-ex2)
 - Clone the repository
 - Open it in android studio
 - Config an emulator or phone
