@@ -1,7 +1,6 @@
 package com.example.whatsup.activities;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -197,7 +195,7 @@ public class Register extends AppCompatActivity {
         super.onResume();
         ConstraintLayout rootLayout = binding.registerLayout;
         if(State.isNight) {
-            rootLayout.setBackgroundResource(R.drawable.wallpaper2);
+            rootLayout.setBackgroundResource(R.drawable.wallpaper);
         }
         else{
             rootLayout.setBackgroundResource(R.drawable.wallpaper2);
@@ -210,41 +208,16 @@ public class Register extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             Uri selectedImageUri = data.getData();
-
-            // Check the size of the selected image
-            long imageSize = getImageSize(selectedImageUri);
-
-            if (imageSize > 5 * 1024 * 1024) {
-                // Image size is greater than 5MB, show an error message or handle it as needed
-                // For example, you can display a Toast message
-                Toast.makeText(this, "Image size exceeds 5MB limit", Toast.LENGTH_SHORT).show();
-            } else {
-                ImageButton imageButton = findViewById(R.id.pictureRegister);
-                imageButton.setImageURI(selectedImageUri);
-                changedPic = true;
-            }
+            ImageButton imageButton = findViewById(R.id.pictureRegister);
+            imageButton.setImageURI(selectedImageUri);
+            changedPic = true;
         }
-    }
-
-    private long getImageSize(Uri imageUri) {
-        String[] filePathColumn = { MediaStore.Images.Media.SIZE };
-        Cursor cursor = getContentResolver().query(imageUri, filePathColumn, null, null, null);
-        long size = -1;
-
-        if (cursor != null && cursor.moveToFirst()) {
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            size = cursor.getLong(columnIndex);
-            cursor.close();
-        }
-
-        return size;
     }
 
 
