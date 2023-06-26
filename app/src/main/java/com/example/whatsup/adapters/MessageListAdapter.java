@@ -19,7 +19,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private List<Message> messageList = new ArrayList<>();
     public static final int MESSAGE_TYPE_IN = 1;
     public static final int MESSAGE_TYPE_OUT = 2;
+    private RecyclerView recyclerView;
 
+
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
+    }
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,8 +46,14 @@ public class MessageListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public void submitList(List<Message> m) {
+        int previousItemCount = getItemCount();
         messageList = m;
         notifyDataSetChanged();
+
+        int newItemCount = getItemCount();
+        if (recyclerView != null && newItemCount > previousItemCount) {
+            recyclerView.scrollToPosition(newItemCount - 1);
+        }
     }
 
     @Override

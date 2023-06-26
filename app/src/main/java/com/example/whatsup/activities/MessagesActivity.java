@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.whatsup.R;
 import com.example.whatsup.State;
@@ -127,7 +128,10 @@ public class MessagesActivity extends AppCompatActivity {
                         List<Message> m = response.body();
                         Collections.reverse(m);
                         adapter.submitList(m);
+                        RecyclerView messagesList = findViewById(R.id.messagesList);
 
+// Set the adapter and data for your RecyclerView
+                        adapter.setRecyclerView(messagesList);
                     }
 
                     @Override

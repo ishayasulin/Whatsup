@@ -195,7 +195,7 @@ public class Register extends AppCompatActivity {
         super.onResume();
         ConstraintLayout rootLayout = binding.registerLayout;
         if(State.isNight) {
-            rootLayout.setBackgroundResource(R.drawable.wallpaper);
+            rootLayout.setBackgroundResource(R.drawable.wallpaper2);
         }
         else{
             rootLayout.setBackgroundResource(R.drawable.wallpaper2);
