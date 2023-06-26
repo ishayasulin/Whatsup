@@ -82,7 +82,7 @@ public class Settings extends AppCompatActivity {
     public void changeBack(){
         ConstraintLayout rootLayout = findViewById(R.id.settingsLayout);
         if(State.isNight) {
-            rootLayout.setBackgroundResource(R.drawable.wallpaper);
+            rootLayout.setBackgroundResource(R.drawable.wallpaper2);
         }
         else{
             rootLayout.setBackgroundResource(R.drawable.wallpaper2);
