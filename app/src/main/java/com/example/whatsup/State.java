@@ -1,7 +1,5 @@
 package com.example.whatsup;
 
-import com.example.whatsup.entities.Contact;
-
 public class State {
     public static String currentUser="";
     public static String token="";
@@ -9,5 +7,5 @@ public class State {
     public static boolean changed;
     public static boolean isNight;
 
-    public static Contact curChat;
+    public static String fireToken;
 }

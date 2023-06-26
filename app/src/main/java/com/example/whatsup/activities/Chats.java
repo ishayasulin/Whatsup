@@ -2,7 +2,6 @@ package com.example.whatsup.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,22 +14,15 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.whatsup.FirebaseService;
 import com.example.whatsup.R;
 import com.example.whatsup.State;
 import com.example.whatsup.adapters.ContactAdapter;
-import com.example.whatsup.api.RetrofitService;
-import com.example.whatsup.api.WebServiceAPI;
 import com.example.whatsup.databinding.ActivityChatsBinding;
 import com.example.whatsup.entities.Contact;
 import com.example.whatsup.repositories.UserRepository;
 import com.example.whatsup.viewmodels.ContactViewModel;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Chats extends AppCompatActivity {
     private ActivityChatsBinding binding;
@@ -55,16 +47,12 @@ public class Chats extends AppCompatActivity {
             startActivity(intent);
         });
 
-        String token = FirebaseService.getToken(this);
-        sendRegistrationToServer(token);
-
-
         ContactViewModel contactViewModel = new ViewModelProvider(this).get(ContactViewModel.class);
         contactViewModel.getAllContacts().observe(this, (List<Contact> list) -> {
             adapter.submitList(list);
             adapter.notifyDataSetChanged();
+            userRepository.loadUser(State.currentUser); // Call the loadUser() function to refresh the data
         });
-
 
         binding.btnAdd.setOnClickListener(view1 -> {
             Intent intent = new Intent(this, AddContact.class);
@@ -99,24 +87,6 @@ public class Chats extends AppCompatActivity {
         Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
         return super.onOptionsItemSelected(item);
-    }
-
-
-
-
-    private void sendRegistrationToServer(String token) {
-        WebServiceAPI api = RetrofitService.getAPI(State.server);
-        api.registerToken(new WebServiceAPI.RegisterTokenPayload(State.currentUser, token)).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                Log.d("custom:", "sendRegistrationToServer: " + token);
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                int x;
-            }
-        });
     }
 }
 

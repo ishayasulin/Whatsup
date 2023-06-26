@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.whatsup.FirebaseService;
 import com.example.whatsup.R;
 import com.example.whatsup.State;
 import com.example.whatsup.databinding.ActivityLoginBinding;
@@ -40,6 +41,7 @@ public class Login extends AppCompatActivity {
             Intent i = new Intent(this, Register.class);
             startActivity(i);
         });
+        State.fireToken = FirebaseService.getToken(this);
         binding.usernameLogin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

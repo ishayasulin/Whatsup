@@ -33,6 +33,6 @@ public class MessageRepository {
     }
 
     public Call<Message> addMessage(Contact to, String content) {
-        return api.sendMessage("Bearer " + State.token, to.getId(), new WebServiceAPI.MessagePayload(content));
+        return api.sendMessage("Bearer " + State.token ,to.getId() ,new WebServiceAPI.MessagePayload(content));
     }
 }

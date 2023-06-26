@@ -30,7 +30,7 @@ public class UserRepository {
     private MessageDao messagesDao;
 
     public Call<String> login(String username, String password) {
-        return api.login(new WebServiceAPI.UtilsPayload(username, password));
+        return api.login(State.fireToken,new WebServiceAPI.UtilsPayload(username, password));
     }
 
     public Call<Void> register(String username, String password, String displayName,String profilePic) {
