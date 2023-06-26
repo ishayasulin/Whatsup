@@ -17,4 +17,4 @@ In this task we created the chatting app from the previous tasks as an android a
 - Config an emulator or phone
 - run the code
 - Enter the server addres in the settings page
-- enjoy!
+- Enjoy!
