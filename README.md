@@ -14,7 +14,7 @@ In this task we created the chatting app from the previous tasks as an android a
 - Run your server (or our from last task [here is the link](https://github.com/AP2-group/ap2-ex2))
 - Clone the repository
 - Open it in android studio
-- Config an emulator or phone
-- Run the code
+- Config an emulator or on your phone
+- Run the program
 - Enter the server addres in the settings page
 - Enjoy!
